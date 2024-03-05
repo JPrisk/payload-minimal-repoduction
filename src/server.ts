@@ -1,5 +1,6 @@
 import express from "express";
 import payload from "payload";
+import { seed } from "./seed";
 
 require("dotenv").config();
 const app = express();
@@ -19,7 +20,10 @@ const start = async () => {
     },
   });
 
-  // Add your own express routes here
+  if (process.env.PAYLOAD_SEED === "true") {
+    await seed(payload);
+    process.exit();
+  }
 
   app.listen(3000);
 };
